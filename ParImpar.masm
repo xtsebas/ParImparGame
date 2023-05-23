@@ -1,0 +1,61 @@
+; -----------------------------------------------
+; UNIVERSIDAD DEL VALLE DE GUATEMALA
+; Organización de computadoras y Assembler
+; Ciclo 1 - 2023
+;
+; Nombre: Sebastian Huertas, Gerson Ramirez, Xavier Lopez
+; Descripción: Juego de 10 casillas de seleccion al azar si el numero es par o impar
+; Autor: Mod. por KB
+;
+; EAX: 
+; ----------------------------------------------- */
+
+.386
+.model flat,stdcall, c
+.stack 4096
+ExitProcess proto,dwExitCode:dword
+
+.data
+    randomNumber db ?
+    fmt db "%d", 0
+
+.code
+	includelib libucrt.lib
+	includelib legacy_stdio_definitions.lib
+	includelib libcmt.lib
+	includelib libvcruntime.lib
+
+
+	extrn printf:near 
+	extrn scanf:near
+	extrn exit:near
+public main
+main proc
+	mov ax, dx      
+    xor dx, dx      
+
+    mov cx, 6     
+    div cx          
+
+    add dl, 1     
+
+    mov al, dl
+
+    and al, 0Fh
+
+    add al, '0'
+
+    mov randomNumber, dl   
+
+    movzx eax, randomNumber
+    push eax
+    push offset fmt
+    call printf
+
+    push 0
+    call exit      
+
+	push 0
+	call exit
+main endp
+end 
